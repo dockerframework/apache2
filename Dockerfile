@@ -1,5 +1,5 @@
 ARG APACHE_VERSION=2.4
-FROM httpd:${APACHE_VERSION}-alpine
+FROM httpd:${APACHE_VERSION}
 
 # ================================================================================================
 #  Inspiration: Docker Framework (https://github.com/zeroc0d3/docker-framework)

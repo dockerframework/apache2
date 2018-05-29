@@ -10,7 +10,7 @@ services:
 env:
   global:
     - COMMIT=${TRAVIS_COMMIT::8}
-    - REPO=dockerframework/apache2:2.4
+    - REPO=dockerframework/apache2:2.4-debian
     - CGO_ENABLED=0
     - GOOS=linux
     - GOARCH=amd64
