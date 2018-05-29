@@ -1,4 +1,4 @@
-ARG APACHE_VERSION=2.4
+ARG APACHE_VERSION=2.4.33
 FROM httpd:${APACHE_VERSION}-alpine
 
 # ================================================================================================

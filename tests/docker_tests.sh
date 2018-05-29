@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DOCKER_IMAGE="dockerframework/apache2"
-DOCKER_TAG="2.4"
+DOCKER_TAG="2.4.33"
 
 #### Halt script on error
 set -e
