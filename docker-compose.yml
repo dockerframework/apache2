@@ -1,0 +1,50 @@
+version: '3.2'
+
+services:
+
+#================================================================================================
+# APACHE2
+#================================================================================================
+  apache2:
+    restart: always
+    build:
+      context: .
+      args:
+        - PHP_UPSTREAM_CONTAINER=php-fpm
+        - PHP_UPSTREAM_PORT=9000
+        - PHP_UPSTREAM_TIMEOUT=60
+        - DOCUMENT_ROOT=/var/www/html
+    links:
+      - workspace-phpfpm
+    ports:
+      - "8105:80"
+      - "8106:443"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./log/apache2:/var/log/apache2                          # volume for config
+      - ./data/laradock:/var/www/html                           # volume for data
+    environment:
+      - APACHE_VERSION=2.4
+
+##================================================================================================
+# WORKSPACE PHP-FPM
+#================================================================================================
+  workspace-phpfpm:
+    restart: always
+    image: dockerframework/workspace-phpfpm:latest
+    ports:
+      - "8901:80"
+      - "8902:9090"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config/php/php-fpm.conf:/usr/local/etc/php-fpm.conf                       # config path
+      - ./config/php/php.ini:/usr/local/etc/php/php.ini                             # ini path
+      - ./config/php/laradock-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini    # xdebug config
+      - ./log/phpfpm:/var/log/phpfpm                                                # log phpfpm
+      - ./vendor/composer.phar:/usr/local/bin/composer                              # vendor composer
+      - ./vendor/deployer.phar:/usr/local/bin/dep                                   # vendor deployer
+      - ./vendor/php-cs-fixer:/usr/local/bin/php-cs-fixer                           # vendor php-cs-fixer
+      - ./data/laradock:/var/www/html                                               # volume for data
+    environment:
+      - NODE_VERSION=10.0.0
+      - YARN_VERSION=1.6.0
